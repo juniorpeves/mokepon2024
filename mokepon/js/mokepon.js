@@ -303,18 +303,10 @@ function pintarPersonaje(){
     )
 }
 
-function moverUp(){
-    capipepo.velocidadY = -5
-}
-function moverDown(){
-    capipepo.velocidadY = 5
-}
-function moverLeft(){
-    capipepo.velocidadX = -5
-}
-function moverRight(){
-    capipepo.velocidadX = 5
-}
+function moverUp(){     capipepo.velocidadY = -5}
+function moverDown(){   capipepo.velocidadY = 5 }
+function moverLeft(){   capipepo.velocidadX = -5}
+function moverRight(){  capipepo.velocidadX = 5}
 
 function detenerMovimiento(){
     capipepo.velocidadX = 0
