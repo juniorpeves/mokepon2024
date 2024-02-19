@@ -48,28 +48,42 @@ let mapaBackground = new Image()
 mapaBackground.src = './assets/mokemap.png'
 
 class Mokepon{
-    constructor(nombre, foto, vida){
+    constructor(nombre, foto, vida, fotoMapa, x=10, y=10){
         this.nombre = nombre
         this.foto = foto
         this.vida = vida
         this.ataques = []
         // Creación de punto 0 para el mokepon
-        this.x = 20
-        this.y = 30
-        this.ancho = 80
-        this.alto = 80
+        this.x = x
+        this.y = y
+        this.ancho = 40
+        this.alto = 40
         // Creación de la imagen en lienzo
         this.mapaFoto = new Image()
-        this.mapaFoto.src = foto
+        this.mapaFoto.src = fotoMapa
         this.velocidadX = 0
         this.velocidadY = 0
+    }
+    // Convirtiendo el drawImage en metodo de la clase
+    pintarMokepon(){
+        lienzo.drawImage(
+            this.mapaFoto,
+            this.x,
+            this.y,
+            this.ancho,
+            this.alto
+        )
     }
 }
 
 // Objetos Instancias - desde una clase
-let hipodoge = new Mokepon('Hipodoge','./assets/mokepons_mokepon_hipodoge_attack.webp', 5)
-let capipepo = new Mokepon('Capipepo','./assets/mokepons_mokepon_capipepo_attack.webp', 5)
-let ratigueya = new Mokepon('Ratigueya','./assets/mokepons_mokepon_ratigueya_attack.webp', 5)
+let hipodoge = new Mokepon('Hipodoge','./assets/mokepons_mokepon_hipodoge_attack.webp', 5, './assets/hipodoge.png')
+let capipepo = new Mokepon('Capipepo','./assets/mokepons_mokepon_capipepo_attack.webp', 5, './assets/capipepo.png')
+let ratigueya = new Mokepon('Ratigueya','./assets/mokepons_mokepon_ratigueya_attack.webp', 5, './assets/ratigueya.png')
+// Creación de enemigos
+let hipodogeEnemigo = new Mokepon('Hipodoge','./assets/mokepons_mokepon_hipodoge_attack.webp', 5, './assets/hipodoge.png', 80,120)
+let capipepoEnemigo = new Mokepon('Capipepo','./assets/mokepons_mokepon_capipepo_attack.webp', 5, './assets/capipepo.png', 150,95)
+let ratigueyaEnemigo = new Mokepon('Ratigueya','./assets/mokepons_mokepon_ratigueya_attack.webp', 5, './assets/ratigueya.png', 200,190)
 
 // Objetos Literales - desde un push
 hipodoge.ataques.push(
@@ -304,13 +318,11 @@ function pintarCanvas(){
         mapa.width,
         mapa.height
     )
-    lienzo.drawImage(
-        mJugadorObjeto.mapaFoto,
-        mJugadorObjeto.x,
-        mJugadorObjeto.y,
-        mJugadorObjeto.ancho,
-        mJugadorObjeto.alto
-    )
+    // Instanciando los mokepones en el mapa
+    mJugadorObjeto.pintarMokepon()
+    hipodogeEnemigo.pintarMokepon()
+    capipepoEnemigo.pintarMokepon()
+    ratigueyaEnemigo.pintarMokepon()
 }
 
 function moverUp(){     mJugadorObjeto.velocidadY = -5}
