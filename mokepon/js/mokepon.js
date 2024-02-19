@@ -308,13 +308,13 @@ function moverDown(){   capipepo.velocidadY = 5 }
 function moverLeft(){   capipepo.velocidadX = -5}
 function moverRight(){  capipepo.velocidadX = 5}
 
-function detenerMovimiento(){
+function stopMove(){
     capipepo.velocidadX = 0
     capipepo.velocidadY = 0
 }
 
-function sePreiosonoUnaTecla(event){
-    switch (event.key) {
+function sePreiosonoUnaTecla(e){
+    switch (e.key) {
         case 'ArrowUp':
             moverUp()
             break;
@@ -334,10 +334,9 @@ function sePreiosonoUnaTecla(event){
 
 function iniciarMapa(){
     intervalo = setInterval(pintarPersonaje, 50)
-    // Escuchando los eventos de teclado
+    // Escuchando cuando se presiona y se suleta la tecla
     window.addEventListener('keydown', sePreiosonoUnaTecla)
-    window.addEventListener('keyup', detenerMovimiento)
-
+    window.addEventListener('keyup', stopMove)
 }
 
 window.addEventListener('load', iniciarJuego)
