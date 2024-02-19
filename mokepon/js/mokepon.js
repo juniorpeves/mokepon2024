@@ -55,6 +55,7 @@ class Mokepon{
         this.y = 30
         this.ancho = 80
         this.alto = 80
+        // Creación de la imagen en lienzo
         this.mapaFoto = new Image()
         this.mapaFoto.src = foto
         this.velocidadX = 0
