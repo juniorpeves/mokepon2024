@@ -124,6 +124,10 @@ capipepoEnemigo.ataques.push(
 
 mokepones.push(hipodoge, capipepo, ratigueya)
 
+function aleatorio(min, max){
+    return Math.floor(Math.random()*(max-min+1)+1)
+}
+
 function iniciarJuego(){
     // Ocultando la Selección y el Mapa
     sectionSeleccionarAtaque.style.display = 'none'
@@ -234,7 +238,7 @@ function seleccionMascotaEnemigo(enemigoSeleccionado){
 }
 
 function arrayAtaqueAleatorio(){
-    let array = [1,2,3,4,5,6]
+    let array = [0,1,2,3,4,5]
     let arrayN = []
 
     while (array.length !== arrayN.length) {
@@ -242,10 +246,6 @@ function arrayAtaqueAleatorio(){
         const coleccion = new Set(arrayN)
         let result = [...coleccion]  
         arrayN = result
-    }
-
-    function aleatorio(min, max){
-        return Math.floor(Math.random()*(max-min+1)+min)
     }
     return arrayN
 }
@@ -337,10 +337,6 @@ function crearMensajeFinal(resultadoFInal){
 
 function resetGame(){
     location.reload()
-}
-
-function aleatorio(min, max){
-    return Math.floor(Math.random()*(max-min+1)+1)
 }
 
 function pintarCanvas(){
