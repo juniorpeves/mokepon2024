@@ -220,6 +220,7 @@ function secuenciaAtaque(){
 
 function seleccionMascotaEnemigo(){
     let mascotaAleatorio = aleatorio(0,mokepones.length-1)
+    console.log(mokepones[mascotaAleatorio].nombre)
     spanMascotaEnemigo.innerHTML = mokepones[mascotaAleatorio].nombre
     ataquesMokeponEnemigo = mokepones[mascotaAleatorio].ataques
     secuenciaAtaque()
@@ -319,10 +320,17 @@ function pintarCanvas(){
         mapa.height
     )
     // Instanciando los mokepones en el mapa
-    mJugadorObjeto.pintarMokepon()
     hipodogeEnemigo.pintarMokepon()
     capipepoEnemigo.pintarMokepon()
     ratigueyaEnemigo.pintarMokepon()
+    mJugadorObjeto.pintarMokepon()
+
+    // Condicional para revisar colision cuando hay velocidad
+    if(mJugadorObjeto.velocidadX !== 0 || mJugadorObjeto.velocidadY !== 0){
+        revisarColision(hipodogeEnemigo)
+        revisarColision(capipepoEnemigo)
+        revisarColision(ratigueyaEnemigo)
+    }
 }
 
 function moverUp(){     mJugadorObjeto.velocidadY = -5}
@@ -371,6 +379,28 @@ function obtenerObjetoMascota(){
             return mokepones[i]
         }       
     }
+}
+
+function revisarColision(enemigo){
+    const arribaEnemigo = enemigo.y
+    const abajoEnemigo = enemigo.y + enemigo.alto
+    const derechaEnemigo = enemigo.x + enemigo.ancho
+    const izquierdaEnemigo = enemigo.x
+    
+    const arribaMascota = mJugadorObjeto.y
+    const abajoMascota = mJugadorObjeto.y + mJugadorObjeto.alto
+    const derechaMascota = mJugadorObjeto.x + mJugadorObjeto.ancho
+    const izquierdaMascota = mJugadorObjeto.x
+    
+    if(
+        abajoMascota < arribaEnemigo || 
+        arribaMascota > abajoEnemigo || 
+        derechaMascota < izquierdaEnemigo || 
+        izquierdaMascota > derechaEnemigo
+    ){
+        return
+    }
+    alert("Hay colision" + enemigo.nombre)
 }
 
 window.addEventListener('load', iniciarJuego)
