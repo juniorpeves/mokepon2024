@@ -33,6 +33,8 @@ let mascotaJugador
 let mJugadorObjeto
 let opcionDeMokepones
 
+let arrayX
+
 // Declarando variables para botones que aun no existen
 let buttonFire
 let buttonWater
@@ -220,35 +222,58 @@ function secuenciaAtaque(){
                 boton.style.background='#112f58'
                 boton.disabled = true
             }
-            ataqueAleatorioEnemigo()
+            iniciarPelea()
         })
     })
 }
 
 function seleccionMascotaEnemigo(enemigoSeleccionado){
-    console.log(enemigoSeleccionado.ataques)
     spanMascotaEnemigo.innerHTML = enemigoSeleccionado.nombre
     ataquesMokeponEnemigo = enemigoSeleccionado.ataques
     secuenciaAtaque()
 }
 
-function ataqueAleatorioEnemigo(){
-    while (1 == 1) {
-        break
-    }   
+function arrayAtaqueAleatorio(){
+    let array = [1,2,3,4,5,6]
+    let arrayN = []
 
-    let ataqueAleatorio = aleatorio(0,ataquesMokeponEnemigo.length -1)
-    if (ataqueAleatorio == 0 || ataqueAleatorio == 1){
-        ataqueEnemigoArray.push('Fire')
-    } else if (ataqueAleatorio == 3 || ataqueAleatorio == 4){
-        ataqueEnemigoArray.push('Water')
-    } else {
-        ataqueEnemigoArray.push('Grass')
+    while (array.length !== arrayN.length) {
+        arrayN.push(aleatorio(0,5))
+        const coleccion = new Set(arrayN)
+        let result = [...coleccion]  
+        arrayN = result
     }
-    iniciarPelea()
+
+    function aleatorio(min, max){
+        return Math.floor(Math.random()*(max-min+1)+min)
+    }
+    return arrayN
+}
+
+function devolverAtaque(enemigo){
+    let eeee = []
+    for (let i = 0; i < enemigo.length; i++) {
+        eeee.push(enemigo[i]['nombre'])
+    }
+    return eeee
+}
+
+function ataqueAleatorioEnemigo(){
+    arrayX = arrayAtaqueAleatorio()
+    let ataques = devolverAtaque(ataquesMokeponEnemigo)
+    for (let i = 0; i < arrayX.length; i++){  
+        if ( ataques[arrayX[i]] == '💧') {
+            ataqueEnemigoArray.push('Water')        
+        } else if (ataques[arrayX[i]] == '🔥') {
+            ataqueEnemigoArray.push('Fire')        
+        } else if (ataques[arrayX[i]] == '🪴') {
+            ataqueEnemigoArray.push('Grass')        
+        }    
+    }
 }
 
 function iniciarPelea(){
+    ataqueAleatorioEnemigo()
     if (ataqueJugadorArray.length === 5){
         combate()
     }
