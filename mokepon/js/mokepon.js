@@ -163,13 +163,29 @@ function iniciarJuego(){
         inputRatigueya = document.getElementById('Ratigueya')
 
     })
-
     // Ocultando la seleeción de reiniciar
     sectionReiniciar.style.display = 'none'
     // Escuchando si se hizo click al boton de Seleccionar Mascota
     buttonMascotaJugador.addEventListener('click', seleccionMascotaJugador)
-    iniciarPelea()
     buttonReset.addEventListener('click',resetGame)
+    
+    unirseAlJuego()
+}
+
+function unirseAlJuego(){
+    // Llamadas al servidor hacia que URI
+    fetch("http://localhost:8080/unirse")
+        // Manipulación de respuesta con .then 
+        .then(function(res){
+            // Consulta si la petición salio bien
+            if(res.ok){
+                res.text()
+                    // Respuesta lista para utilizar
+                    .then(function(res){
+                        console.log(res)
+                    })
+            }
+        })
 }
 
 function seleccionMascotaJugador(){
