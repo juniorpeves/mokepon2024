@@ -22,10 +22,23 @@
             <h1 class="titulo">Recorre el mapa con tu mokepon</h1>
             <canvas id="mapa"></canvas>
             <!-- Creación de botones para el movimiento del mokepon -->
-            <button onmouseup="stopMove()" onmousedown="moverUp()"> Up </button>
-            <button onmouseup="stopMove()" onmousedown="moverLeft()"> Left </button>
-            <button onmouseup="stopMove()" onmousedown="moverRight()"> Right </button>
-            <button onmouseup="stopMove()" onmousedown="moverDown()"> Down </button>
+            
+        <table>
+            <tr>
+                <td></td>
+                <td><button type="button" onmouseup="stopMove()" onmousedown="moverUp()" onclick="moverUpTab()"> Up </button></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><button type="button" onmouseup="stopMove()" onmousedown="moverLeft()" onclick="moverLeftTab()"> Left </button></td>
+                <td><button type="button" onmouseup="stopMove()" onmousedown="moverDown()" onclick="moverDownTab()"> Down </button></td>
+                <td><button type="button" onmouseup="stopMove()" onmousedown="moverRight()" onclick="moverRightTab()"> Right </button></td>
+            </tr>
+        </table>
+            
+            
+            
+            
         </section>
 
         <section id="seleccionar-ataque">
