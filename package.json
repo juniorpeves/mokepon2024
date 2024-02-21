@@ -1,7 +1,7 @@
 {
-  "name": "mokepon",
+  "name": "primeraweb",
   "version": "1.0.0",
-  "description": "Proyecto de mokepon",
+  "description": "proyecto mokepon",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,9 +11,7 @@
     "url": "git+https://github.com/juniorpeves/mokepon2024.git"
   },
   "keywords": [
-    "mokepon",
-    "proyecto",
-    "javascript"
+    "mokepon"
   ],
   "author": "@juniorpeves",
   "license": "ISC",
