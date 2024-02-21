@@ -19,26 +19,15 @@
         </section>
 
         <section id="ver-mapa">
-            <h1 class="titulo">Recorre el mapa con tu mokepon</h1>
+            <h2 class="subtitulo">Recorre el mapa con tu mokepon</h2>
             <canvas id="mapa"></canvas>
             <!-- Creación de botones para el movimiento del mokepon -->
-            
-        <table>
-            <tr>
-                <td></td>
-                <td><button type="button" onmouseup="stopMove()" onmousedown="moverUp()" onclick="moverUpTab()"> Up </button></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td><button type="button" onmouseup="stopMove()" onmousedown="moverLeft()" onclick="moverLeftTab()"> Left </button></td>
-                <td><button type="button" onmouseup="stopMove()" onmousedown="moverDown()" onclick="moverDownTab()"> Down </button></td>
-                <td><button type="button" onmouseup="stopMove()" onmousedown="moverRight()" onclick="moverRightTab()"> Right </button></td>
-            </tr>
-        </table>
-            
-            
-            
-            
+            <button type="button" onmouseup="stopMove()" onmousedown="moverUp()" onclick="moverUpTab()"> Up </button>
+            <div>
+                <button type="button" onmouseup="stopMove()" onmousedown="moverLeft()" onclick="moverLeftTab()"> Left </button>
+                <button type="button" onmouseup="stopMove()" onmousedown="moverDown()" onclick="moverDownTab()"> Down </button>
+                <button type="button" onmouseup="stopMove()" onmousedown="moverRight()" onclick="moverRightTab()"> Right </button>
+            </div>
         </section>
 
         <section id="seleccionar-ataque">
