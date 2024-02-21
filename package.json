@@ -1,0 +1,27 @@
+{
+  "name": "mokepon",
+  "version": "1.0.0",
+  "description": "Proyecto de mokepon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juniorpeves/mokepon2024.git"
+  },
+  "keywords": [
+    "mokepon",
+    "proyecto",
+    "javascript"
+  ],
+  "author": "@juniorpeves",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juniorpeves/mokepon2024/issues"
+  },
+  "homepage": "https://github.com/juniorpeves/mokepon2024#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
