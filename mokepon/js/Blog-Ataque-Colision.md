@@ -6,11 +6,11 @@ En las clases de `javascript` del curso de Programación Basica, donde los mokep
 
 ```javascript
 function arrayAtaqueAleatorio(){
-    let array = [0,1,2,3,4,5]
+    let array = [0,1,2,3,4]
     let arrayN = []
 
     while (array.length !== arrayN.length) {
-        arrayN.push(aleatorio(0,5))
+        arrayN.push(aleatorio(0,4))
         const coleccion = new Set(arrayN)
         let result = [...coleccion]  
         arrayN = result
@@ -32,7 +32,7 @@ function devolverAtaque(enemigo){
 function ataqueAleatorioEnemigo(){
     arrayX = arrayAtaqueAleatorio()
     let ataques = devolverAtaque(ataquesMokeponEnemigo)
-    for (let i = 0; i < arrayX.length; i++){  
+    for (let i = 0; i < arrayX.length; i++){ 
         if ( ataques[arrayX[i]] == '💧') {
             ataqueEnemigoArray.push('Water')        
         } else if (ataques[arrayX[i]] == '🔥') {
@@ -66,8 +66,8 @@ function secuenciaAtaque(){
 
 ```javascript
 function iniciarPelea(){
-    ataqueAleatorioEnemigo()
     if (ataqueJugadorArray.length === 5){
+        ataqueAleatorioEnemigo()
         combate()
     }
 }

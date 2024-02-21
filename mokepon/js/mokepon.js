@@ -125,7 +125,7 @@ capipepoEnemigo.ataques.push(
 mokepones.push(hipodoge, capipepo, ratigueya)
 
 function aleatorio(min, max){
-    return Math.floor(Math.random()*(max-min+1)+1)
+    return Math.floor(Math.random()*(max-min+1))
 }
 
 function iniciarJuego(){
@@ -155,7 +155,7 @@ function iniciarJuego(){
     sectionReiniciar.style.display = 'none'
     // Escuchando si se hizo click al boton de Seleccionar Mascota
     buttonMascotaJugador.addEventListener('click', seleccionMascotaJugador)
-
+    iniciarPelea()
     buttonReset.addEventListener('click',resetGame)
 }
 
@@ -212,17 +212,14 @@ function secuenciaAtaque(){
         boton.addEventListener('click',(e)=>{
             if(e.target.textContent === '🔥'){
                 ataqueJugadorArray.push('Fire')
-                console.log(ataqueJugadorArray)
                 boton.style.background='#112f58'
                 boton.disabled = true
             }else if(e.target.textContent === '💧'){
                 ataqueJugadorArray.push('Water')
-                console.log(ataqueJugadorArray)
                 boton.style.background='#112f58'
                 boton.disabled = true
             }else{
                 ataqueJugadorArray.push('Grass')
-                console.log(ataqueJugadorArray)
                 boton.style.background='#112f58'
                 boton.disabled = true
             }
@@ -238,11 +235,11 @@ function seleccionMascotaEnemigo(enemigoSeleccionado){
 }
 
 function arrayAtaqueAleatorio(){
-    let array = [0,1,2,3,4,5]
+    let array = [0,1,2,3,4]
     let arrayN = []
 
     while (array.length !== arrayN.length) {
-        arrayN.push(aleatorio(0,5))
+        arrayN.push(aleatorio(0,4))
         const coleccion = new Set(arrayN)
         let result = [...coleccion]  
         arrayN = result
@@ -261,7 +258,7 @@ function devolverAtaque(enemigo){
 function ataqueAleatorioEnemigo(){
     arrayX = arrayAtaqueAleatorio()
     let ataques = devolverAtaque(ataquesMokeponEnemigo)
-    for (let i = 0; i < arrayX.length; i++){  
+    for (let i = 0; i < arrayX.length; i++){ 
         if ( ataques[arrayX[i]] == '💧') {
             ataqueEnemigoArray.push('Water')        
         } else if (ataques[arrayX[i]] == '🔥') {
@@ -273,8 +270,8 @@ function ataqueAleatorioEnemigo(){
 }
 
 function iniciarPelea(){
-    ataqueAleatorioEnemigo()
     if (ataqueJugadorArray.length === 5){
+        ataqueAleatorioEnemigo()
         combate()
     }
 }
