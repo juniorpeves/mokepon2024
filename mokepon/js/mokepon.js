@@ -255,17 +255,33 @@ function secuenciaAtaque(){
 }
 
 function enviarAtaques(){
-        fetch(`http://localhost:8080/mokepon/${jugadorId}/ataques`,{
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                ataques: ataqueJugadorArray
-            })
+    fetch(`http://localhost:8080/mokepon/${jugadorId}/ataques`,{
+        method: 'POST',
+        headers: { 
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            ataques: ataqueJugadorArray
         })
+    })
+    
+    intervalo = setInterval(obtenerAtaques, 50)
 }
 
+function obtenerAtaques(){
+    fetch(`http://localhost:8080/mokepon/${enemigoId}/ataques`)
+        .then(function(res){
+            if (res.ok){
+                res.json()
+                    .then(function({ ataques}){
+                        if (ataques.length === 5){
+                            ataqueEnemigoArray = ataques 
+                            combate()
+                        }
+                    })
+            }
+        })
+}
 
 function seleccionMascotaEnemigo(enemigoSeleccionado){
     spanMascotaEnemigo.innerHTML = enemigoSeleccionado.nombre
@@ -321,6 +337,8 @@ function indexAmbosOponente(jugador,enemigo){
 }
 
 function combate(){
+    clearInterval(intervalo)
+
     for (let i = 0; i < ataqueJugadorArray.length; i++) {
         if (ataqueJugadorArray[i] == ataqueEnemigoArray[i]){
             indexAmbosOponente(i, i)
@@ -516,6 +534,9 @@ function revisarColision(enemigo){
     // Deteniendo el movimiento, mostrando la seleccion de ataques y ocultando el mapa
     stopMove()
     clearInterval(intervalo)
+
+    enemigoId = enemigo.id
+
     sectionSeleccionarAtaque.style.display = 'flex'
     sectionVerMapa.style.display = 'none'
     seleccionMascotaEnemigo(enemigo)

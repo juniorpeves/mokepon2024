@@ -84,6 +84,15 @@ app.post("/mokepon/:jugadorId/ataques",(req, res)=>{        // Servicio para ide
     res.end() // Servicio finalizado
 })
 
+app.get("/mokepon/:jugadorId/ataques",(req, res) => {
+    const jugadorId = req.params.jugadorId || ""
+    const jugador = jugadores.find((jugador) => jugador.id === jugadorId)
+
+    res.send({
+        ataques: jugador.ataques || []
+    })
+})
+
 // Mantener escuchando las peticiones indicando un puerto
 app.listen(8080, () =>{
     console.log("Servidor funcionando")
