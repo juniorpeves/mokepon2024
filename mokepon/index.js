@@ -20,6 +20,9 @@ class Jugador{
         this.x = x
         this.y = y
     }
+    asignarAtaques(ataques){
+        this.ataques = ataques
+    }
 }
 
 class Mokepon{
@@ -67,6 +70,18 @@ app.post("/mokepon/:jugadorId/posicion",(req, res) => {
     res.send({
         enemigos
     })
+})
+
+app.post("/mokepon/:jugadorId/ataques",(req, res)=>{        // Servicio para identiicar usuario (Por ID) POST
+    const jugadorId = req.params.jugadorId || ""
+    const ataques = req.body.ataques || []
+
+    const jugadorIndex = jugadores.findIndex((jugador) => jugadorId === jugador.id)  //Buscando jugadorId en la lista de jugadores
+
+    if (jugadorIndex >= 0){
+        jugadores[jugadorIndex].asignarAtaques(ataques)
+    }
+    res.end() // Servicio finalizado
 })
 
 // Mantener escuchando las peticiones indicando un puerto

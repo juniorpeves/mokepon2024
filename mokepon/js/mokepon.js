@@ -22,6 +22,7 @@ const mapa = document.getElementById('mapa')
 
 // Variables globales
 let jugadorId = null            // ID del jugador
+let enemigoId = null            // ID del jugador
 let mokepones = []
 let mokeponesEnemigos = []
 let ataqueJugadorArray = []
@@ -245,10 +246,26 @@ function secuenciaAtaque(){
                 boton.style.background='#112f58'
                 boton.disabled = true
             }
-            iniciarPelea()
+
+            if (ataqueJugadorArray.length === 5){
+                enviarAtaques()
+            }
         })
     })
 }
+
+function enviarAtaques(){
+        fetch(`http://localhost:8080/mokepon/${jugadorId}/ataques`,{
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ataques: ataqueJugadorArray
+            })
+        })
+}
+
 
 function seleccionMascotaEnemigo(enemigoSeleccionado){
     spanMascotaEnemigo.innerHTML = enemigoSeleccionado.nombre
@@ -372,14 +389,13 @@ function pintarCanvas(){
     mJugadorObjeto.pintarMokepon()
     enviarPosicion(mJugadorObjeto.x, mJugadorObjeto.y)
     
-    mokeponesEnemigos.forEach(function(mokepon){
-        mokepon.pintarMokepon()
+    mokeponesEnemigos.forEach(function (mokepon)
+    {
+        if(mokepon != undefined){
+            mokepon.pintarMokepon()
+            revisarColision(mokepon)
+        }
     })
-
-    // Condicional para revisar colision cuando hay velocidad
-    if(mJugadorObjeto.velocidadX !== 0 || mJugadorObjeto.velocidadY !== 0){
-        revisionColisionX()
-    }
 }
 
 function enviarPosicion(x,y){
@@ -398,30 +414,33 @@ function enviarPosicion(x,y){
             res.json()
             .then(function({ enemigos }){
                 console.log(enemigos)
-                mokeponesEnemigos = enemigos.map(function (enemigo) {
-                    let mokeponEnemigo = null
-                    const mokeponNombre = enemigo.mokepon.nombre || ""
-                    if (mokeponNombre === "Hipodoge"){
-                        mokeponEnemigo = new Mokepon('Hipodoge','./assets/mokepons_mokepon_hipodoge_attack.webp', 5, './assets/hipodoge.png')
-                    } else if (mokeponNombre === "Capipepo"){
-                        mokeponEnemigo = new Mokepon('Capipepo','./assets/mokepons_mokepon_capipepo_attack.webp', 5, './assets/capipepo.png')
-                    } else if (mokeponNombre === "Ratigueya"){
-                        mokeponEnemigo = new Mokepon('Ratigueya','./assets/mokepons_mokepon_ratigueya_attack.webp', 5, './assets/ratigueya.png')
+                mokeponesEnemigos = enemigos.map(function (enemigo)
+                {
+                    let mokeponEnmigo = null
+                    if(enemigo.mokepon !== undefined) {
+                        const mokeponNombre = enemigo.mokepon.nombre 
+                        switch (mokeponNombre)
+                        {
+                        case "Hipodoge":
+                            mokeponEnmigo = new Mokepon('Hipodoge', './assets/mokepons_mokepon_hipodoge_attack.png', 5, './assets/hipodoge.png', enemigo.id)
+                            break
+                        case "Capipepo":
+                            mokeponEnmigo = new Mokepon('Capipepo', './assets/mokepons_mokepon_capipepo_attack.png', 5, './assets/capipepo.png', enemigo.id)
+                            break
+                        case "Ratigueya":
+                            mokeponEnmigo = new Mokepon('Ratigueya', './assets/mokepons_mokepon_ratigueya_attack.png', 5, './assets/ratigueya.png', enemigo.id)
+                            break
+                        default:
+                            break
+                        }
+                        mokeponEnmigo.x = enemigo.x
+                        mokeponEnmigo.y = enemigo.y
                     }
-                    mokeponEnemigo.x = enemigo.x
-                    mokeponEnemigo.y = enemigo.y
-
-                    return mokeponEnemigo
+                    return mokeponEnmigo
                 })
             })
         }
     })
-}
-
-function revisionColisionX(){
-    revisarColision(hipodogeEnemigo)
-    revisarColision(capipepoEnemigo)
-    revisarColision(ratigueyaEnemigo)
 }
 
 function moverUp(){     mJugadorObjeto.velocidadY = -5}
