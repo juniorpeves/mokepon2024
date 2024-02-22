@@ -64,7 +64,8 @@ mapa.width = anchoDelMapa
 mapa.height = alturaQueBuscamos
 
 class Mokepon{
-    constructor(nombre, foto, vida, fotoMapa){
+    constructor(nombre, foto, vida, fotoMapa, id = null){
+        this.id = id
         this.nombre = nombre
         this.foto = foto
         this.vida = vida
@@ -97,44 +98,24 @@ let hipodoge = new Mokepon('Hipodoge','./assets/mokepons_mokepon_hipodoge_attack
 let capipepo = new Mokepon('Capipepo','./assets/mokepons_mokepon_capipepo_attack.webp', 5, './assets/capipepo.png')
 let ratigueya = new Mokepon('Ratigueya','./assets/mokepons_mokepon_ratigueya_attack.webp', 5, './assets/ratigueya.png')
 // Creación de enemigos
-let hipodogeEnemigo = new Mokepon('Hipodoge','./assets/mokepons_mokepon_hipodoge_attack.webp', 5, './assets/hipodoge.png')
-let capipepoEnemigo = new Mokepon('Capipepo','./assets/mokepons_mokepon_capipepo_attack.webp', 5, './assets/capipepo.png')
-let ratigueyaEnemigo = new Mokepon('Ratigueya','./assets/mokepons_mokepon_ratigueya_attack.webp', 5, './assets/ratigueya.png')
 
 // Objetos Literales - desde un push
-hipodoge.ataques.push(
-    {nombre: '💧', id: 'buttonWater'},
-    {nombre: '💧', id: 'buttonWater'},
-    {nombre: '💧', id: 'buttonWater'},
-    {nombre: '🔥', id: 'buttonFire'},
-    {nombre: '🪴', id: 'buttonGrass'},    
-)
-ratigueya.ataques.push(
-    {nombre: '🔥', id: 'buttonFire'},
-    {nombre: '🔥', id: 'buttonFire'},
-    {nombre: '🔥', id: 'buttonFire'},
-    {nombre: '💧', id: 'buttonWater'},   
-    {nombre: '🪴', id: 'buttonGrass'},    
-)
-capipepo.ataques.push(
-    {nombre: '🪴', id: 'buttonGrass'},    
-    {nombre: '🪴', id: 'buttonGrass'},    
-    {nombre: '🪴', id: 'buttonGrass'},    
-    {nombre: '💧', id: 'buttonWater'},
-    {nombre: '🔥', id: 'buttonFire'},    
-)
-hipodogeEnemigo.ataques.push(
-    {nombre: '💧', id: 'buttonWater'}, {nombre: '💧', id: 'buttonWater'}, {nombre: '💧', id: 'buttonWater'}, 
-    {nombre: '🔥', id: 'buttonFire'}, {nombre: '🪴', id: 'buttonGrass'}, 
-)
-ratigueyaEnemigo.ataques.push(
+const Hipodoge_ataques = [
+    {nombre: '💧', id: 'buttonWater'}, {nombre: '💧', id: 'buttonWater'}, {nombre: '💧', id: 'buttonWater'},
+    {nombre: '🔥', id: 'buttonFire'}, {nombre: '🪴', id: 'buttonGrass'},    
+]
+const Capipepo_ataques = [
+    {nombre: '🪴', id: 'buttonGrass'}, {nombre: '🪴', id: 'buttonGrass'}, {nombre: '🪴', id: 'buttonGrass'},    
+    {nombre: '💧', id: 'buttonWater'}, {nombre: '🔥', id: 'buttonFire'}, 
+]
+const Ratigueya_ataques = [
     {nombre: '🔥', id: 'buttonFire'}, {nombre: '🔥', id: 'buttonFire'}, {nombre: '🔥', id: 'buttonFire'},
     {nombre: '💧', id: 'buttonWater'}, {nombre: '🪴', id: 'buttonGrass'},    
-)
-capipepoEnemigo.ataques.push(
-    {nombre: '🪴', id: 'buttonGrass'}, {nombre: '🪴', id: 'buttonGrass'}, {nombre: '🪴', id: 'buttonGrass'},
-    {nombre: '💧', id: 'buttonWater'}, {nombre: '🔥', id: 'buttonFire'},    
-)
+]
+
+hipodoge.ataques.push(...Hipodoge_ataques)
+ratigueya.ataques.push(...Ratigueya_ataques)
+capipepo.ataques.push(...Capipepo_ataques)
 
 mokepones.push(hipodoge, capipepo, ratigueya)
 
@@ -388,13 +369,7 @@ function pintarCanvas(){
         mapa.height
     )
     mJugadorObjeto.pintarMokepon()
-
     enviarPosicion(mJugadorObjeto.x, mJugadorObjeto.y)
-
-    // Instanciando los mokepones en el mapa
-    hipodogeEnemigo.pintarMokepon()
-    capipepoEnemigo.pintarMokepon()
-    ratigueyaEnemigo.pintarMokepon()
 
     // Condicional para revisar colision cuando hay velocidad
     if(mJugadorObjeto.velocidadX !== 0 || mJugadorObjeto.velocidadY !== 0){
@@ -412,6 +387,28 @@ function enviarPosicion(x,y){
             x,
             y
         })
+    })
+    .then(function(res){
+        if (res.ok){
+            res.json()
+            .then(function({ enemigos }){
+                console.log(enemigos)
+                let mokeponEnemigo = null
+                enemigos.forEach(function (enemigo){
+                    const mokeponNombre = enemigo.mokepon.nombre || ""
+                    if (mokeponNombre === "Hipodoge"){
+                        mokeponEnemigo = new Mokepon('Hipodoge','./assets/mokepons_mokepon_hipodoge_attack.webp', 5, './assets/hipodoge.png')
+                    } else if (mokeponNombre === "Capipepo"){
+                        mokeponEnemigo = new Mokepon('Capipepo','./assets/mokepons_mokepon_capipepo_attack.webp', 5, './assets/capipepo.png')
+                    } else if (mokeponNombre === "Ratigueya"){
+                        mokeponEnemigo = new Mokepon('Ratigueya','./assets/mokepons_mokepon_ratigueya_attack.webp', 5, './assets/ratigueya.png')
+                    }
+                    mokeponEnemigo.x = enemigo.x
+                    mokeponEnemigo.y = enemigo.y
+                    mokeponEnemigo.pintarMokepon()
+                })
+            })
+        }
     })
 }
 
