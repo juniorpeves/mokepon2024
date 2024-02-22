@@ -23,6 +23,7 @@ const mapa = document.getElementById('mapa')
 // Variables globales
 let jugadorId = null            // ID del jugador
 let mokepones = []
+let mokeponesEnemigos = []
 let ataqueJugadorArray = []
 let ataquesMokeponEnemigo
 let ataqueEnemigoArray = []
@@ -370,6 +371,10 @@ function pintarCanvas(){
     )
     mJugadorObjeto.pintarMokepon()
     enviarPosicion(mJugadorObjeto.x, mJugadorObjeto.y)
+    
+    mokeponesEnemigos.forEach(function(mokepon){
+        mokepon.pintarMokepon()
+    })
 
     // Condicional para revisar colision cuando hay velocidad
     if(mJugadorObjeto.velocidadX !== 0 || mJugadorObjeto.velocidadY !== 0){
@@ -393,8 +398,8 @@ function enviarPosicion(x,y){
             res.json()
             .then(function({ enemigos }){
                 console.log(enemigos)
-                let mokeponEnemigo = null
-                enemigos.forEach(function (enemigo){
+                mokeponesEnemigos = enemigos.map(function (enemigo) {
+                    let mokeponEnemigo = null
                     const mokeponNombre = enemigo.mokepon.nombre || ""
                     if (mokeponNombre === "Hipodoge"){
                         mokeponEnemigo = new Mokepon('Hipodoge','./assets/mokepons_mokepon_hipodoge_attack.webp', 5, './assets/hipodoge.png')
@@ -405,7 +410,8 @@ function enviarPosicion(x,y){
                     }
                     mokeponEnemigo.x = enemigo.x
                     mokeponEnemigo.y = enemigo.y
-                    mokeponEnemigo.pintarMokepon()
+
+                    return mokeponEnemigo
                 })
             })
         }
