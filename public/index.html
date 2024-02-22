@@ -22,11 +22,23 @@
             <h2 class="subtitulo">Recorre el mapa con tu mokepon</h2>
             <canvas id="mapa"></canvas>
             <!-- Creación de botones para el movimiento del mokepon -->
-            <button type="button" onmouseup="stopMove()" onmousedown="moverUp()" onclick="moverUpTab()"> Up </button>
+            <button 
+                onmouseup="stopMove()" onmousedown="moverUp()"
+                ontouchstart="moverUp()" ontouchend="stopMove()">
+            Up</button>
             <div>
-                <button type="button" onmouseup="stopMove()" onmousedown="moverLeft()" onclick="moverLeftTab()"> Left </button>
-                <button type="button" onmouseup="stopMove()" onmousedown="moverDown()" onclick="moverDownTab()"> Down </button>
-                <button type="button" onmouseup="stopMove()" onmousedown="moverRight()" onclick="moverRightTab()"> Right </button>
+                <button 
+                    onmouseup="stopMove()" onmousedown="moverLeft()"
+                    ontouchstart="moverLeft()" ontouchend="stopMove()">
+                Left</button>
+                <button 
+                    onmouseup="stopMove()" onmousedown="moverDown()"
+                    ontouchstart="moverDown()" ontouchend="stopMove()">
+                Down </button>
+                <button 
+                    onmouseup="stopMove()" onmousedown="moverRight()"
+                    ontouchstart="moverRight()" ontouchend="stopMove()">
+                Right </button>
             </div>
         </section>
 
@@ -58,6 +70,6 @@
                 </div>
             </div>
         </section>
-        <script src="./js/mokepon.js"></script>        
+        <script src="./mokepon.js"></script>        
     </body>
 </html>

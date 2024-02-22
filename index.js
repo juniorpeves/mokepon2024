@@ -4,6 +4,7 @@ const cors = require('cors')
 // Creando aplicación (Generando instancia del servidor)
 const app = express()
 
+app.use(express.static('public'))
 app.use(cors())         // Deshabilita los errores relacionados con cors
 app.use(express.json()) // Habilitar recibir peticiones POST en *.json
 
@@ -95,5 +96,5 @@ app.get("/mokepon/:jugadorId/ataques",(req, res) => {
 
 // Mantener escuchando las peticiones indicando un puerto
 app.listen(8080, () =>{
-    console.log("Servidor funcionando")
+    console.log("Run server")
 })
