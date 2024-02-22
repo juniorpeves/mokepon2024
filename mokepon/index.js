@@ -16,6 +16,10 @@ class Jugador{
     asignarMokepon(mokepon){    // Metodo para asignar mokepon a jugador
         this.mokepon = mokepon
     }
+    actualizarPosicion(x, y){
+        this.x = x
+        this.y = y
+    }
 }
 
 class Mokepon{
@@ -45,6 +49,19 @@ app.post("/mokepon/:jugadorId",(req, res)=>{        // Servicio para identiicar 
     console.log(jugadores)
     console.log(jugadorId)
     res.end() // Servicio finalizado
+})
+
+app.post("/mokepon/:jugadorId/posicion",(req, res) => {
+    const jugadorId = req.params.jugadorId || ""
+    const x = req.body.x || ""
+    const y = req.body.y || ""
+
+    const jugadorIndex = jugadores.findIndex((jugador) => jugadorId === jugador.id)  //Buscando jugadorId en la lista de jugadores
+
+    if (jugadorIndex >= 0){
+        jugadores[jugadorIndex].actualizarPosicion(x,y)
+    }
+    res.end() // Servicio finalizdo
 })
 
 // Mantener escuchando las peticiones indicando un puerto

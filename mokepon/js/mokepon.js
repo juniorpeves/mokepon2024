@@ -387,17 +387,34 @@ function pintarCanvas(){
         mapa.width,
         mapa.height
     )
+    mJugadorObjeto.pintarMokepon()
+
+    enviarPosicion(mJugadorObjeto.x, mJugadorObjeto.y)
+
     // Instanciando los mokepones en el mapa
     hipodogeEnemigo.pintarMokepon()
     capipepoEnemigo.pintarMokepon()
     ratigueyaEnemigo.pintarMokepon()
-    mJugadorObjeto.pintarMokepon()
 
     // Condicional para revisar colision cuando hay velocidad
     if(mJugadorObjeto.velocidadX !== 0 || mJugadorObjeto.velocidadY !== 0){
         revisionColisionX()
     }
 }
+
+function enviarPosicion(x,y){
+    fetch(`http://localhost:8080/mokepon/${jugadorId}/posicion`,{
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            x,
+            y
+        })
+    })
+}
+
 function revisionColisionX(){
     revisarColision(hipodogeEnemigo)
     revisarColision(capipepoEnemigo)
