@@ -7,14 +7,13 @@ const app = express()
 app.use(cors())         // Deshabilita los errores relacionados con cors
 app.use(express.json()) // Habilitar recibir peticiones POST en *.json
 
-// Creando lista de jugadores vacio
-const jugadores = []
+const jugadores = []    // Creando lista de jugadores vacio
 
 class Jugador{
     constructor(id){
         this.id = id
     }
-    asignarMokepon(mokepon){
+    asignarMokepon(mokepon){    // Metodo para asignar mokepon a jugador
         this.mokepon = mokepon
     }
 }
@@ -25,33 +24,27 @@ class Mokepon{
     }
 }
 
-// Función por solicitud de cliente
-app.get("/unirse", (req, res)=>{
-    // Creando ID aleatorio (número convertido a cadena de texto)
-    const id = `${Math.random()}`
-    // Creando jugador 
-    const jugador = new Jugador(id)
-    // Agregando id de jugador en lista
-    jugadores.push(jugador)
-    // Permitiendo llamadas desde cualquier origen
-    res.setHeader("Access-Control-Allow-Origin", "*")
+app.get("/unirse", (req, res)=>{        // Servicio solicitud de cliente GET
+    const id = `${Math.random()}`       // Creando ID aleatorio (número convertido a cadena de texto)
+    const jugador = new Jugador(id)     // Creando jugador 
+    jugadores.push(jugador)             // Agregando id de jugador en lista
+    res.setHeader("Access-Control-Allow-Origin", "*")   // Permitiendo llamadas desde cualquier origen
     res.send(id)
 })
 
-app.post("/mokepon/:jugadorId",(req, res)=>{
+app.post("/mokepon/:jugadorId",(req, res)=>{        // Servicio para identiicar usuario (Por ID) POST
     const jugadorId = req.params.jugadorId || ""
-    const nombre = req.body.mokepon || ""
-    const mokepon = new Mokepon(nombre)
+    const nombreMokepon = req.body.mokepon || ""
+    const mokepon = new Mokepon(nombreMokepon)      // Creación de objeto tipo Mokepon
 
-    const jugadorIndex = jugadores.findIndex((jugador) => jugadorId === jugador.id)
+    const jugadorIndex = jugadores.findIndex((jugador) => jugadorId === jugador.id)  //Buscando jugadorId en la lista de jugadores
 
     if (jugadorIndex >= 0){
         jugadores[jugadorIndex].asignarMokepon(mokepon)
     }
-
     console.log(jugadores)
     console.log(jugadorId)
-    res.end()
+    res.end() // Servicio finalizado
 })
 
 // Mantener escuchando las peticiones indicando un puerto

@@ -21,7 +21,7 @@ const sectionVerMapa = document.getElementById('ver-mapa')
 const mapa = document.getElementById('mapa')
 
 // Variables globales
-let jugadorId = null
+let jugadorId = null            // ID del jugador
 let mokepones = []
 let ataqueJugadorArray = []
 let ataquesMokeponEnemigo
@@ -176,25 +176,32 @@ function iniciarJuego(){
 function unirseAlJuego(){
     // Llamadas al servidor hacia que URI
     fetch("http://localhost:8080/unirse")
-        // Manipulación de respuesta con .then 
-        .then(function(res){
-            // Consulta si la petición salio bien
-            if(res.ok){
+        .then(function(res){                    // Manipulación de respuesta con .then 
+            if(res.ok){                         // Consulta si la petición salio bien
                 res.text()
-                    // Respuesta lista para utilizar
-                    .then(function(respuesta){
+                    .then(function(respuesta){  // Respuesta lista para utilizar
                         console.log(respuesta)
-                        jugadorId = respuesta
+                        jugadorId = respuesta   // Asignando ID a la variable jugadorID
                     })
             }
         })
 }
 
+function seleccionarMokepon(mascotaJugador){        //Envio de información al BACKEND, usando POST
+    fetch(`http://localhost:8080/mokepon/${jugadorId}`,{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            mokepon: mascotaJugador
+        })
+    })
+}
+
 function seleccionMascotaJugador(){
-    // Bloqueando secciones
-    sectionSeleccionarMascota.style.display = 'none'
-    // Escuchando cuando las mascotas han sido eleccionadas con checked
-    if(inputHipodoge.checked){
+    sectionSeleccionarMascota.style.display = 'none'        // Bloqueando secciones
+    if(inputHipodoge.checked){                              // Escuchando cuando las mascotas han sido eleccionadas con checked
         spanMascotaJugador.innerHTML = inputHipodoge.id
         mascotaJugador = inputHipodoge.id
     } else if (inputCapipepo.checked) {
@@ -213,19 +220,6 @@ function seleccionMascotaJugador(){
     extraerAtaques(mascotaJugador)
     iniciarMapa()
 }
-
-function seleccionarMokepon(mascotaJugador){
-    fetch(`http://localhost:8080/mokepon/${jugadorId}`,{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            mokepon: mascotaJugador
-        })
-    })
-}
-
 
 function extraerAtaques(mascotaJugador){
     let ataques
